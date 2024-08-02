@@ -1,0 +1,316 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang2057{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\*\generator Riched20 10.0.22621}\viewkind4\uc1 
+\pard\widctlpar\sa160\sl252\slmult1\kerning2\b\f0\fs24\lang16393 Write a program to implement sentence segmentation and word tokenization\par
+
+\pard\sa200\sl276\slmult1\kerning0\lang9 CODE: \par
+\b0\fs22 #pip intall nltk \par
+#py -m pip install --upgrade pip \par
+#nltk.download('punkt') #nltk.download('wordnet') \par
+from nltk.tokenize import word_tokenize \par
+text="God is Great! I won a lottery." print("The \par
+words are",word_tokenize(text)) \par
+from nltk.tokenize import sent_tokenize text="God \par
+is Great! I won a lottery." print("The sentences \par
+are",sent_tokenize(text)) \par
+-------------------------------------------------------------------------------------------------------------------\par
+\b\fs24 Write a program to Implement stemming and lemmatization \par
+CODE: \par
+\b0\fs22 import nltk \par
+nltk.download('averaged_perceptron_tagger' \par
+) from nltk.stem import PorterStemmer from \par
+nltk.stem import SnowballStemmer from \par
+nltk.stem import LancasterStemmer \par
+words=['run','runner','running','ran','runs','easily','caring'] \par
+def portstemming(words): \par
+ps=PorterStemmer() \par
+print("Porter Stemmer") for \par
+word in words: \par
+print(word,' >',ps.stem(word)) \par
+def snowballstemming(words): \par
+snowball=SnowballStemmer(language='english') \par
+print("Snowball Stemmer") \par
+for word in words: \par
+print(word,' >',snowball.stem(word)) \par
+def lancasterstemming(words): \par
+lancaster=LancasterStemmer() \par
+print("Lancaster Stemmer") for \par
+word in words: \par
+print(word,' >',lancaster.stem(word)) \par
+print("Select Operation.") print("1.Porter \par
+Stemmer") print("2.Snowball Stemmer") \par
+print("3.Lancaster \par
+Stemmer") \par
+while True: \par
+choice=input('Enter Choice(1/2/3):') if \par
+choice in ('1','2','3'): \par
+if choice == '1': \par
+print(portstemming(words)) \par
+elif choice == '2': \par
+print(snowballstemming(words)) \par
+elif choice == '3': \par
+print(lancasterstemming(words))  \par
+next_calculation = input("Do you want to do stemming again? (yes/no):") if \par
+next_calculation== "no": \par
+break else: \par
+print("Invalid Input")\par
+----------------------------------------\par
+\b\fs24 CODE: \b0\fs22\par
+import nltk \par
+from nltk.stem import WordNetLemmatizer \par
+wordnet_lemmatizer = WordNetLemmatizer() text \par
+=input("Enter words for Lemmatizing") \par
+tokenization= nltk.word_tokenize(text) \par
+# v verb, a adjective, n noun in lemmatize parameter for w \par
+in tokenization: \par
+print("Lemma for \{\} is \{\}".format(w,wordnet_lemmatizer.lemmatize(w,'v')))\par
+\lang16393 ------------------------------------------------------------------------------------------------\par
+\b\fs24 Write a program to Implement a tri-gram model\par
+CODE: \par
+\b0\fs22 import nltk \par
+nltk.download('punkt') \par
+from nltk.tokenize import word_tokenize \par
+from nltk import FreqDist \par
+import pandas as pd \par
+f = open("D:/salma/salma1.txt") \par
+sample = f.read() \par
+sample_tokens = nltk.word_tokenize(sample) \par
+print('\\n Sample Tokens:',sample_tokens) \par
+print('\\n Type of Sample Tokens:',type(sample_tokens)) print('\\n \par
+Length of Sample Tokens:',len(sample_tokens)) \par
+sample_freq =FreqDist(sample_tokens) \par
+tokens=[] \par
+sf=[] \par
+for i in sample_freq: \par
+tokens.append(i) \par
+sf.append(sample_freq[i]) \par
+df = pd.DataFrame(\{'Tokens':tokens,'Frequency':sf\}) \par
+print('\\n',df) \par
+print('\\n Bigrams:',list(nltk.bigrams(sample_tokens))) print('\\n \par
+Trigrams:',list(nltk.trigrams(sample_tokens))) print('\\n N- \par
+grams(4):',list(nltk.ngrams(sample_tokens,4))) \par
+------------------------------------------------------------------------------------------------\par
+\b\fs24  Write a program to Implement PoS tagging using HMM & Neural Model\par
+CODE: \b0\fs22\par
+import nltk \par
+from collections import Counter \par
+text="Guru(9 is one of the best sites to learn WEB,SAP,Ethical Hacking and much more online." \par
+lower_case=text.lower() \par
+tokens=nltk.word_tokenize(lower_case) \par
+tags=nltk.pos_tag(tokens) print(tags) \par
+counts=Counter(tag for word,tag in tags) \par
+###for tag in tags: ### \par
+print(tag) \par
+print(counts) \par
+fd=nltk.FreqDist(tokens) \par
+fd.plot() \par
+fd1=nltk.FreqDist(counts) \par
+fd1.plot() \par
+------------------------------------------------------------------------------------------------\par
+\b\fs24 Write a program to Implement syntactic parsing of a given text\par
+CODE: \b0\fs22\par
+import nltk \par
+nltk.download(\lquote averaged_perceptron_tagger\rquote  \par
+) \par
+from nltk import pos_tag,word_tokenize,RegexpParser \par
+sentence=\rquote Reliance Retail acquires majority stake in designer brand Abraham & Thomson\rquote  \par
+tokens=word_tokenize(sentence) \par
+tags=pos_tag(tokens) \par
+grammer=\rdblquote NP:\{<NN>?<DT>*<NN>\}\rdblquote  \par
+chunker=RegexpParser(grammer) \par
+result=chunker.parse(tags) \par
+print(result) \par
+result.draw() \par
+------------------------------------------------------------------------------------------------\par
+ \b\fs24 Write a program to Implement dependency parsing of a given text \par
+CODE: \par
+\b0\fs22 #spacy download en_core_web_sm (install on cmd) \par
+import spacy \par
+from spacy import displacy \par
+nlp = spacy.load("en_core_web_sm") \par
+sentence = 'Deemed universitiies charge huge fees' doc \par
+=nlp(sentence) \par
+print("\{:<15\}|\{:<8\}|\{:<15\}|\{:<20\}".format('Token','Relation','Head','Children')) print('- \par
+'*70) \par
+for token in doc: \par
+print("\{:15\}|\{:<8\}|\{:<15\}|\{:<20\}".format(str(token.text),str(token.dep_), \par
+str(token.head.text),str([child for child in token.children]))) \par
+# Use displacy to visualize the dependency \par
+displacy.serve(doc,style='dep',options=\{'distance':120\})\par
+------------------------------------------------------------------------------------------------\b\fs24\par
+Write a program to Implement Named Entity Recognition (NER) \par
+CODE: \par
+\b0\fs22 import spacy \par
+import pandas as pd \par
+from spacy import displacy \par
+NER = spacy.load("en_core_web_sm") \par
+text = "Apple acquired zoom-in-China-on-wednesdav-6th May 2020.\\ This news made Apple \par
+and Google stock jump by 5% on Dow Jones Indexin -the \\ United Starps of America" \par
+doc = NER(text) \par
+entities = [] labels \par
+= [] position_start \par
+= [] position_end = \par
+[] \par
+for ent in doc.ents: \par
+entities.append(ent) \par
+labels.append(ent.label_) \par
+position_start.append(ent.start_char) \par
+position_end.append(ent.end_char) \par
+df = pd.DataFrame(\{'Entities': entities, 'Labels': labels, 'Position_Start': position_start, 'Position_End': \par
+position_end\}) \par
+print(df) \par
+displacy.serve(doc, style='dep', options=\{'distance': 120\}) \par
+displacy.render(doc, style="ent")\par
+------------------------------------------------------------------------------------------------\par
+ \b\fs24 Write a program to Implement Text Summarization for the given sample text\par
+CODE: \par
+\b0\fs22 from nltk.tokenize import word_tokenize,sent_tokenize from \par
+nltk.corpus import stopwords \par
+f = open("D:/salma/salma.txt") \par
+text = f.read() \par
+words = word_tokenize(text) \par
+sents = sent_tokenize(text) \par
+stopwords = set(stopwords.words('english')) \par
+freqTable = dict() \par
+for word in words: \par
+word = word.lower() if \par
+word in stopwords:  \par
+continue \par
+elif word in freqTable: \par
+freqTable[word]+=1 \par
+else: \par
+freqTable[word]=1 \par
+sentValue = dict() \par
+for sent in sents: \par
+for word,freq in freqTable.items(): if \par
+word in sent.lower(): \par
+if sent in sentValue: sentValue[sent]+=freq \par
+else: \par
+sentValue[sent]=freq \par
+sumValues = 0 for \par
+s in sentValue: \par
+sumValues+=sentValue[s] avg = \par
+int(sumValues/len(sents)) \par
+summary = '' \par
+for sent in sents: \par
+if (sent in sentValue) and (sentValue[sent]>1.2*avg): \par
+summary+=''+sent \par
+print(summary)\par
+------------------------------------------------------------------------------------------------\b\fs24\par
+Demonstrate the use of NLP in designing Virtual Assistants. Apply LSTM, build \par
+conversational Bots.\par
+CODE: \par
+\b0\fs22 import nltk \par
+from nltk.chat.util import Chat \par
+reflections = \{ \par
+"i am" : "you are", \par
+"i was" : "you were", \par
+"i" : "you", \par
+"i'm" : "you are", \par
+"i'd" : "you would", \par
+"i've" : "you have", \par
+"i'll" : "you will", \par
+"my" : "your", \par
+"you are" : "I am", \par
+"you were" : "I was", \par
+"you've" : "I have", \par
+"you'll" : "I will", \par
+"your" : "my", \par
+"yours" : "mine", \par
+"you" : "me", \par
+"me" : "you" \par
+\} \par
+pairs = [ \par
+[ \par
+r"my name is (.*)", \par
+["Hello %1, How are you today ?",] \par
+], \par
+[ \par
+r"hi|hey|hello", \par
+["Hello", "Hey there",] \par
+], \par
+[ \par
+r"what is your name ?", \par
+["I am a bot created by Analytics Vidhya. you can call me crazy!",] \par
+], \par
+[ \par
+r"how are you ?", \par
+["I'm doing goodnHow about You ?",] \par
+], \par
+[ \par
+r"sorry (.*)", \par
+["Its alright","Its OK, never mind",] \par
+], \par
+[ \par
+r"I am fine", \par
+["Great to hear that, How can I help you?",] \par
+], \par
+[ \par
+r"i'm (.*) doing good", \par
+["Nice to hear that","How can I help you?:)",] \par
+], \par
+[ \par
+r"(.*) age?", \par
+["I'm a computer program dudenSeriously you are asking me this?",] \par
+], \par
+[ \par
+r"what (.*) want ?", \par
+["Make me an offer I can't refuse",] \par
+], \par
+[ \par
+r"(.*) created ?", \par
+["Raghav created me using Python's NLTK library ","top secret ;)",] \par
+], \par
+[ \par
+r"(.*) (location|city) ?", \par
+['Indore, Madhya Pradesh',] \par
+], \par
+[ \par
+r"how is weather in (.*)?", \par
+["Weather in %1 is awesome like always","Too hot man here in %1","Too cold man here \par
+in %1","Never even heard about %1"] \par
+], \par
+[ \par
+r"i work in (.*)?", \par
+["%1 is an Amazing company, I have heard about it. But they are in huge loss these \par
+days.",] \par
+], \par
+[ \par
+r"(.*)raining in (.*)", \par
+["No rain since last week here in %2","Damn its raining too much here in %2"] \par
+], \par
+[ \par
+r"how (.*) health(.*)", \par
+["I'm a computer program, so I'm always healthy ",] \par
+], \par
+[ \par
+r"(.*) (sports|game) ?", \par
+["I'm a very big fan of Football",] \par
+], \par
+[ \par
+r"who (.*) sportsperson ?", \par
+["Messy","Ronaldo","Roony"] \par
+], \par
+[ \par
+r"who (.*) (moviestar|actor)?", \par
+["Brad Pitt"] \par
+], \par
+[ \par
+r"i am looking for online guides and courses to learn data science, can you \par
+suggest?", \par
+["Crazy_Tech has many great articles with each step explanation along with code, you \par
+can explore"] \par
+], \par
+[ \par
+r"quit", \par
+["BBye take care. See you soon :) ","It was nice talking to you. See you soon :)"] \par
+], \par
+] \par
+def chat(): \par
+print("Hi! I am a chatbot created by Analytics Vidhya for your service") \par
+chat = Chat(pairs, reflections) \par
+chat.converse() \par
+#initiate the conversation \par
+if  name  == " main ": \par
+\lang9\par
+}
+ 
